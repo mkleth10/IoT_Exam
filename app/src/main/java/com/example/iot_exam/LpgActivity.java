@@ -10,32 +10,32 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.text.SimpleDateFormat;
 
-public class TempActivity extends AppCompatActivity {
+public class LpgActivity extends AppCompatActivity {
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM HH:mm:ss");
-    DataPoint[] temp_points;
+    DataPoint[] lpg_points;
     JsonDataHandler dataHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.graph_layout);
-        setTitle("Temperature");
+        setTitle("LPG");
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
 
         String json = getIntent().getStringExtra("json");
 
         dataHandler = new JsonDataHandler();
-        temp_points = dataHandler.jsonHandler(json, "field1");
+        lpg_points = dataHandler.jsonHandler(json, "field3");
 
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(temp_points);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(lpg_points);
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(10);
 
         graph.addSeries(series);
 
-        GraphLayout gl = new GraphLayout("Temp");
+        GraphLayout gl = new GraphLayout("LPG");
         graph = gl.beautifier(graph, series, formatter);
     }
 }

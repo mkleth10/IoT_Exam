@@ -19,6 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".TempActivity"></activity>
+        <activity android:name=".HumActivity"></activity>
+        <activity android:name=".LpgActivity"></activity>
+        <activity android:name=".CoActivity"></activity>
     </application>
 
 </manifest>

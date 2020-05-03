@@ -10,26 +10,26 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.text.SimpleDateFormat;
 
-public class TempActivity extends AppCompatActivity {
+public class CoActivity extends AppCompatActivity {
 
     SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM HH:mm:ss");
-    DataPoint[] temp_points;
+    DataPoint[] co_points;
     JsonDataHandler dataHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.graph_layout);
-        setTitle("Temperature");
+        setTitle("CO");
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
 
         String json = getIntent().getStringExtra("json");
 
         dataHandler = new JsonDataHandler();
-        temp_points = dataHandler.jsonHandler(json, "field1");
+        co_points = dataHandler.jsonHandler(json, "field4");
 
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(temp_points);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(co_points);
         series.setDrawDataPoints(true);
         series.setDataPointsRadius(10);
 
