@@ -7,11 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
 
-import com.jjoe64.graphview.series.DataPoint;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,8 +16,8 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button temp_button, hum_button, lpg_button, co_button, smoke_button;
-    String json = "";
+    Button room_jacob, room_mikkel_b, room_mikkel_l;
+    String[] json = new String[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,53 +25,33 @@ public class MainActivity extends AppCompatActivity {
         new FetchData().execute();
         setContentView(R.layout.activity_main);
 
-        temp_button = findViewById(R.id.temp);
-        hum_button = findViewById(R.id.humidity);
-        lpg_button = findViewById(R.id.lpg);
-        co_button = findViewById(R.id.co);
-        smoke_button = findViewById(R.id.smoke);
+        room_jacob = findViewById(R.id.room_jacob);
+        room_mikkel_b = findViewById(R.id.room_mikkel_b);
+        room_mikkel_l = findViewById(R.id.room_mikkel_l);
 
-        temp_button.setOnClickListener(new View.OnClickListener() {
+        room_jacob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, TempActivity.class);
-                myIntent.putExtra("json", json);
+                Intent myIntent = new Intent(MainActivity.this, RoomActivity.class);
+                myIntent.putExtra("json", json[0]);
                 startActivity(myIntent);
             }
         });
 
-        hum_button.setOnClickListener(new View.OnClickListener() {
+        room_mikkel_b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, HumActivity.class);
-                myIntent.putExtra("json", json);
+                Intent myIntent = new Intent(MainActivity.this, RoomActivity.class);
+                myIntent.putExtra("json", json[1]);
                 startActivity(myIntent);
             }
         });
 
-        lpg_button.setOnClickListener(new View.OnClickListener() {
+        room_mikkel_l.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, LpgActivity.class);
-                myIntent.putExtra("json", json);
-                startActivity(myIntent);
-            }
-        });
-
-        co_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, CoActivity.class);
-                myIntent.putExtra("json", json);
-                startActivity(myIntent);
-            }
-        });
-
-        smoke_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, TempActivity.class);
-                myIntent.putExtra("json", json);
+                Intent myIntent = new Intent(MainActivity.this, RoomActivity.class);
+                myIntent.putExtra("json", json[2]);
                 startActivity(myIntent);
             }
         });
@@ -87,18 +62,26 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Void... voids) {
             try {
-                URL url = new URL("https://api.thingspeak.com/channels/1040273/feeds.json?api_key=609FSRHQNGD8C485&results=10");
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                URL[] urls = new URL[]{
+                        new URL("https://api.thingspeak.com/channels/1054207/feeds.json?api_key=LJU94M5HZ6B3Z8NU&results=10"),
+                        new URL("https://api.thingspeak.com/channels/1054206/feeds.json?api_key=KU449K5FKMIVME7Q&results=10"),
+                        new URL("https://api.thingspeak.com/channels/1040273/feeds.json?api_key=609FSRHQNGD8C485&results=10")
+                };
+
                 StringBuilder stringBuilder = new StringBuilder();
-                String line;
 
-                while((line = bufferedReader.readLine()) != null){
-                    stringBuilder.append(line).append("\n");
+                for(int i = 0; i < urls.length; i++) {
+                    HttpURLConnection urlConnection = (HttpURLConnection) urls[i].openConnection();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    String line;
+
+                    while((line = bufferedReader.readLine()) != null){
+                        stringBuilder.append(line).append("\n");
+                    }
+                    stringBuilder.append("---\n");
+                    bufferedReader.close();
+                    urlConnection.disconnect();
                 }
-
-                bufferedReader.close();
-                urlConnection.disconnect();
 
                 return stringBuilder.toString();
 
@@ -111,7 +94,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String response){
-            json = response;
+            String[] responses;
+            String delimiter = "\n---\n";
+            responses = response.split(delimiter);
+            json[0] = responses[0];
+            json[1] = responses[1];
+            json[2] = responses[2];
         }
     }
 }
