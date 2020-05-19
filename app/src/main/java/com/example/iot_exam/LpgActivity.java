@@ -35,7 +35,7 @@ public class LpgActivity extends AppCompatActivity {
 
         graph.addSeries(series);
 
-        GraphLayout gl = new GraphLayout("LPG");
+        GraphLayout gl = new GraphLayout("PPM");
         graph = gl.beautifier(graph, series, formatter);
     }
 }

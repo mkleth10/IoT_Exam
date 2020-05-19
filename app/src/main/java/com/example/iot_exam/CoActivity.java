@@ -35,7 +35,7 @@ public class CoActivity extends AppCompatActivity {
 
         graph.addSeries(series);
 
-        GraphLayout gl = new GraphLayout("Temp");
+        GraphLayout gl = new GraphLayout("PPM");
         graph = gl.beautifier(graph, series, formatter);
     }
 }

@@ -35,7 +35,7 @@ public class HumActivity extends AppCompatActivity {
 
         graph.addSeries(series);
 
-        GraphLayout gl = new GraphLayout("Hum");
+        GraphLayout gl = new GraphLayout("%");
         graph = gl.beautifier(graph, series, formatter);
     }
 }
