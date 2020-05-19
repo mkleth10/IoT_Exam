@@ -15,6 +15,7 @@ public class RoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_layout);
+        setTitle(getIntent().getStringExtra("Name"));
 
         temp_button = findViewById(R.id.temp);
         hum_button = findViewById(R.id.humidity);

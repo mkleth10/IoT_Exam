@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         new FetchData().execute();
         setContentView(R.layout.activity_main);
+        setTitle("Rooms");
 
         room_jacob = findViewById(R.id.room_jacob);
         room_mikkel_b = findViewById(R.id.room_mikkel_b);
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(MainActivity.this, RoomActivity.class);
                 myIntent.putExtra("json", json[0]);
+                myIntent.putExtra("Name", room_jacob.getText());
                 startActivity(myIntent);
             }
         });
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(MainActivity.this, RoomActivity.class);
                 myIntent.putExtra("json", json[1]);
+                myIntent.putExtra("Name", room_mikkel_b.getText());
                 startActivity(myIntent);
             }
         });
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(MainActivity.this, RoomActivity.class);
                 myIntent.putExtra("json", json[2]);
+                myIntent.putExtra("Name", room_mikkel_l.getText());
                 startActivity(myIntent);
             }
         });
