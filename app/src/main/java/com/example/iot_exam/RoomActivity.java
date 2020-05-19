@@ -64,7 +64,7 @@ public class RoomActivity extends AppCompatActivity {
         smoke_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(RoomActivity.this, TempActivity.class);
+                Intent myIntent = new Intent(RoomActivity.this, SmokeActivity.class);
                 myIntent.putExtra("json", json);
                 startActivity(myIntent);
             }

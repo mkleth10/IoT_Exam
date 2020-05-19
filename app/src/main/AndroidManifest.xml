@@ -22,6 +22,7 @@
         <activity android:name=".HumActivity"></activity>
         <activity android:name=".LpgActivity"></activity>
         <activity android:name=".CoActivity"></activity>
+        <activity android:name=".SmokeActivity"></activity>
         <activity android:name=".RoomActivity"></activity>
     </application>
 
